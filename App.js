@@ -16,6 +16,9 @@ import Address from "./src/screens/profile_screens/Address";
 import MyReview from "./src/screens/profile_screens/MyReview";
 import Reviews from "./src/screens/Reviews";
 import PaymentScreen from "./src/screens/profile_screens/PaymentScreen";
+import Login from "./src/screens/LoginScreen";
+import SignUp from "./src/screens/SignupScreen";
+import HeaderButton from "./src/components/HeaderButton";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -147,6 +150,56 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name='Login'
+          component={Login}
+          options={{
+            headerStyle: {
+              backgroundColor: "transparent",
+              elevation: 0,
+            },
+            headerLeft: () => (
+              <HeaderButton
+                button={"Log In"}
+                location={"Login"}
+                side={"Login"}
+              />
+            ),
+            headerRight: () => (
+              <HeaderButton
+                button={"Sign Up"}
+                location={"Signup"}
+                side={"Login"}
+              />
+            ),
+            headerTitle: "",
+          }}
+        />
+        <Stack.Screen
+          name='Signup'
+          component={SignUp}
+          options={{
+            headerStyle: {
+              backgroundColor: "transparent",
+              elevation: 0,
+            },
+            headerLeft: () => (
+              <HeaderButton
+                button={"Log In"}
+                location={"Login"}
+                side={"Signup"}
+              />
+            ),
+            headerRight: () => (
+              <HeaderButton
+                button={"Sign Up"}
+                location={"Signup"}
+                side={"Signup"}
+              />
+            ),
+            headerTitle: "",
+          }}
+        />
         <Stack.Screen
           name='Root'
           component={Root}

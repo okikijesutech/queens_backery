@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -11,14 +12,20 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  Modal,
+  Button,
+  Image,
 } from "react-native";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
 import bread from "../../assets/Bread.png";
 import fries from "../../assets/fries.png";
 import ham from "../../assets/hamburger.png";
 import pizza from "../../assets/pizza.png";
 import CategoryItem from "../components/CategoryItem";
 import Item from "../components/Item";
+import baker from "../../assets/Baker.png";
+import takeAway from "../../assets/Take_Away.png";
+import service from "../../assets/service.png";
 
 const DATA = [
   {
@@ -100,6 +107,13 @@ const DATA2 = [
 const HomeScreen = () => {
   const [selectedId, setSelectedId] = useState();
   const [clicked, setClicked] = useState(false);
+  const [modalVisibility, setModalVisibility] = useState(false);
+  const [currentModal, setCurrentModal] = useState(1);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    setModalVisibility(true);
+  }, []);
 
   const renderItem = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "#ffc533" : "#f1eef9";
@@ -164,10 +178,7 @@ const HomeScreen = () => {
               <Ionicons name='filter-sharp' size={24} color={"white"} />
             </TouchableOpacity>
           </View>
-          <ScrollView
-            style={styles.scrollVIewContainer}
-            showsVerticalScrollIndicator={false}
-          >
+          <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.categoriesContainer}>
               <View style={styles.categoriesHeader}>
                 <Text style={styles.catText}>Categories</Text>
@@ -208,6 +219,192 @@ const HomeScreen = () => {
           </ScrollView>
         </SafeAreaView>
       </TouchableWithoutFeedback>
+      {currentModal === 1 && (
+        <Modal visible={modalVisibility} animationType='slide'>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <TouchableOpacity
+                style={{
+                  alignSelf: "flex-end",
+
+                  marginBottom: 30,
+                }}
+                onPress={() => setModalVisibility(false)}
+              >
+                <Text style={{ color: "#ffc533", fontSize: 16 }}>Skip</Text>
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: "bold",
+                  alignSelf: "center",
+                  textAlign: "center",
+                  marginBottom: 15,
+                }}
+              >
+                Delicious Freshly baked Foods
+              </Text>
+              <Image source={baker} />
+              <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                <Octicons
+                  name='dot-fill'
+                  size={12}
+                  color='#ffc533'
+                  style={{ marginRight: 10 }}
+                />
+                <Octicons
+                  name='dot-fill'
+                  size={12}
+                  color='#f1eef9'
+                  style={{ marginRight: 10 }}
+                />
+                <Octicons
+                  name='dot-fill'
+                  size={12}
+                  color='#f1eef9'
+                  style={{ marginRight: 10 }}
+                />
+              </View>
+              <Text
+                style={{
+                  fontSize: 14,
+                  alignSelf: "center",
+                  textAlign: "center",
+                  marginBottom: 30,
+                  width: 200,
+                }}
+              >
+                Order tasty baked items coming straight from our oven
+              </Text>
+              <Button
+                title='Next'
+                color={"#ffc533"}
+                onPress={() => setCurrentModal(currentModal + 1)}
+              />
+            </View>
+          </View>
+        </Modal>
+      )}
+      {currentModal === 2 && (
+        <Modal visible={modalVisibility} animationType='slide'>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <TouchableOpacity
+                style={{ alignSelf: "flex-end" }}
+                onPress={() => setModalVisibility(false)}
+              >
+                <Text style={{ color: "#ffc533", fontSize: 16 }}>Skip</Text>
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: "bold",
+                  alignSelf: "center",
+                  textAlign: "center",
+                  marginBottom: 15,
+                }}
+              >
+                Get Fastest Delivery Food For You
+              </Text>
+              <Image source={takeAway} />
+              <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                <Octicons
+                  name='dot-fill'
+                  size={12}
+                  color='#f1eef9'
+                  style={{ marginRight: 10 }}
+                />
+                <Octicons
+                  name='dot-fill'
+                  size={12}
+                  color='#ffc533'
+                  style={{ marginRight: 10 }}
+                />
+                <Octicons
+                  name='dot-fill'
+                  size={12}
+                  color='#f1eef9'
+                  style={{ marginRight: 10 }}
+                />
+              </View>
+              <Text
+                style={{
+                  fontSize: 14,
+                  alignSelf: "center",
+                  textAlign: "center",
+                  marginBottom: 30,
+                  width: 200,
+                }}
+              >
+                We serve orders with fast, easy and low cost delivery
+              </Text>
+              <Button
+                title='Next'
+                color={"#ffc533"}
+                onPress={() => setCurrentModal(currentModal + 1)}
+              />
+            </View>
+          </View>
+        </Modal>
+      )}
+      {currentModal === 3 && (
+        <Modal visible={modalVisibility} animationType='slide'>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: "bold",
+                  alignSelf: "center",
+                  textAlign: "center",
+                  marginBottom: 15,
+                }}
+              >
+                Our service is top-notch!
+              </Text>
+              <Image source={service} />
+              <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                <Octicons
+                  name='dot-fill'
+                  size={12}
+                  color='#f1eef9'
+                  style={{ marginRight: 10 }}
+                />
+                <Octicons
+                  name='dot-fill'
+                  size={12}
+                  color='#f1eef9'
+                  style={{ marginRight: 10 }}
+                />
+                <Octicons
+                  name='dot-fill'
+                  size={12}
+                  color='#ffc533'
+                  style={{ marginRight: 10 }}
+                />
+              </View>
+              <Text
+                style={{
+                  fontSize: 14,
+                  alignSelf: "center",
+                  textAlign: "center",
+                  marginBottom: 30,
+                  width: 200,
+                }}
+              >
+                Our Customer service team are ready to give you a better
+                experience
+              </Text>
+
+              <Button
+                title='Get Started'
+                color={"#ffc533"}
+                onPress={() => setModalVisibility(false)}
+              />
+            </View>
+          </View>
+        </Modal>
+      )}
     </KeyboardAvoidingView>
   );
 };
@@ -275,7 +472,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
   },
-  scrollVIewContainer: {},
+  modalContent: {
+    paddingHorizontal: 16,
+    paddingVertical: 45,
+  },
 });
 
 export default HomeScreen;
